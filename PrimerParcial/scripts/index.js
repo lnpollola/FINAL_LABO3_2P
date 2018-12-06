@@ -128,13 +128,18 @@ function eliminarPersonaje() {
 function modificarPersonaje() {
     //agregar codigo que crea necesario
 
+    if (document.getElementById("ladoHeroe").checked) 
+    {
+        var ladoCheck = "Heroe";
+    }else {var ladoCheck = "Villano";}   
+
     var personajeModificado = new Personaje(
         heroeGlobal.id,   
         document.getElementById("nombreHeroe").value   , 
         document.getElementById("apellidoHeroe").value ,
         document.getElementById("aliasHeroe").value    ,
         document.getElementById("edadHeroe").value     ,
-        document.getElementById("ladoHeroe").value   
+        ladoCheck
     );
     
     ejecutarTransaccion("Modificar", personajeModificado);
@@ -313,7 +318,11 @@ function transicion() {
     {
         if (xml.status==200) 
         {
-            alert( JSON.parse(xml.response).message );
+            // alert( JSON.parse(xml.response).message );
+
+            $('#modalOK').modal('show');
+            document.getElementById("textoRespuesta").innerHTML = JSON.parse(xml.response).message;
+
             document.getElementById("formAlta").reset();
             traerListaHeroes();
         } 
