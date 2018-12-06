@@ -134,8 +134,9 @@ function modificarPersonaje() {
         document.getElementById("apellidoHeroe").value ,
         document.getElementById("aliasHeroe").value    ,
         document.getElementById("edadHeroe").value     ,
-        document.getElementById("ladoHeroe").value     
+        document.getElementById("ladoHeroe").value   
     );
+    
     ejecutarTransaccion("Modificar", personajeModificado);
     //animacion para cerrar formulario
 
