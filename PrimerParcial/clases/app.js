@@ -175,8 +175,12 @@ var SegundoPARC;
     ///SPINNER
     function transicionSpinner() {
         document.getElementById("spinner").style.display = "none";
+        document.getElementById("divTable").style.display = "block";
     }
     function altaPersonaje() {
+        document.getElementById("divTable").style.display = 'none';
+        document.getElementById("spinner").style.display = "block";
+        $('#exampleModalCenter').modal('hide');
         var flag = true;
         var idHeroe = Number($("#idHeroe").val());
         var nombreHeroe = String($("#nombreHeroe").val());
@@ -189,18 +193,15 @@ var SegundoPARC;
         else {
             var ladoCheck = "Villano";
         }
-        // let ladoHeroe       =String($("#ladoHeroe").val());
-        //    let nombreA:string = String($("#nombreA").val());
-        //    let sondioA:string = String($("#sondioA").val());
-        //    let radGatoA:boolean = $("#radGatoA").prop("checked");
-        //    let radPerroA:boolean = $("#radPerroA").prop("checked");
-        //    let radPajaroA:boolean = $("#radPajaroA").prop("checked");
         var heroesLista = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
         if (flag == true) {
             var nuevoPersonaje = new SegundoPARC.heroe(idHeroe, nombreHeroe, apellidoHeroe, aliasHeroe, edadHeroe, ladoCheck);
             heroesLista.push(nuevoPersonaje);
-            var stringHeroesLista = JSON.stringify(heroesLista);
-            localStorage.setItem("LocalHeroes", stringHeroesLista);
+            var stringHeroesLista_1 = JSON.stringify(heroesLista);
+            setTimeout(function () {
+                localStorage.setItem("LocalHeroes", stringHeroesLista_1);
+                transicionSpinner();
+            }, 5000);
         }
         else {
             $('#exampleModalCenter').modal('hide');

@@ -176,7 +176,11 @@ namespace SegundoPARC{
     });//fin document.ready
 
     function mostrarHeroes(valor?:any):void {
-        let heroesStorage:any|null =  JSON.parse(localStorage.getItem("LocalHeroes") || "[]"); 
+
+        let heroesStorage:any|null =  JSON.parse(
+            localStorage.getItem("LocalHeroes") || "[]"
+        )
+            ; 
         var tBodyTable = $('#tBodyTable')[0];
         var seccionPersonajes:string = "";   
     
@@ -256,10 +260,15 @@ namespace SegundoPARC{
 ///SPINNER
 function transicionSpinner() {
     document.getElementById("spinner")!.style.display = "none";
+    document.getElementById("divTable")!.style.display = "block";
 }
 
 
 function altaPersonaje() {
+
+    document.getElementById("divTable")!.style.display='none';
+    document.getElementById("spinner")!.style.display = "block";
+    $('#exampleModalCenter').modal('hide'); 
 
     let flag = true;
 
@@ -274,15 +283,6 @@ function altaPersonaje() {
         var ladoCheck = "Heroe";
     }else {var ladoCheck = "Villano";}   
 
-
-    // let ladoHeroe       =String($("#ladoHeroe").val());
-
-    //    let nombreA:string = String($("#nombreA").val());
-    //    let sondioA:string = String($("#sondioA").val());
-
-    //    let radGatoA:boolean = $("#radGatoA").prop("checked");
-    //    let radPerroA:boolean = $("#radPerroA").prop("checked");
-           //    let radPajaroA:boolean = $("#radPajaroA").prop("checked");
 
 
     let heroesLista = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
@@ -301,9 +301,14 @@ function altaPersonaje() {
           heroesLista.push( nuevoPersonaje );
 
           let stringHeroesLista = JSON.stringify(heroesLista);
-          
-          localStorage.setItem("LocalHeroes", stringHeroesLista);
-    
+
+          setTimeout(function (){
+
+            localStorage.setItem("LocalHeroes", stringHeroesLista);
+            transicionSpinner();
+          }, 5000); 
+        
+        
     }
     else {
             $('#exampleModalCenter').modal('hide'); 
