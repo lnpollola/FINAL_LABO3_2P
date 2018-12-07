@@ -3,7 +3,7 @@ var SegundoPARC;
 (function (SegundoPARC) {
     var heroeID;
     //Creo un Héroe Global para manejar datos
-    var heroeGlobal = { "id": "", "nombre": "", "apellido": "", "alias": "", "edad": "", "lado": "" };
+    // var heroeGlobal = { "id":"","nombre":"","apellido":"","alias":"","edad":"","lado":""}
     $(document).ready(function () {
         mostrarHeroes();
         //Asigno botones por JQUERY
@@ -18,7 +18,7 @@ var SegundoPARC;
             altaPersonaje();
         });
         $("#btnEliminar").click(function () {
-            var idActual = Number(heroeGlobal.id);
+            var idActual = Number($("#idHeroe").val());
             eliminarPersonaje(idActual);
         });
         $("#botonAgregarHeroe").click(function () {
@@ -29,7 +29,7 @@ var SegundoPARC;
             //ACTIVO BOTONES DE MODIFICAR Y ELIMINAR
             document.getElementById("btnModificar").style.display = 'none';
             document.getElementById("btnEliminar").style.display = 'none';
-            traigoUltimoID();
+            // traigoUltimoID();
         });
         // $("#btnModificar").click(function() { 
         //     ejecutarTransaccion("Modificacion");
@@ -174,35 +174,23 @@ var SegundoPARC;
         }
         $('#exampleModalCenter').modal('show');
     }
-    // function eliminarHeroe(heroe) {
-    //     var data = {
-    //         "collection":"heroes",
-    //         "id": heroe.id
-    //     }
-    //     //AGREGAR CODIGO PARA ELIMINAR EL HEROE
-    //     var spinner = document.getElementById("spinner");
-    //     spinner.style.visibility = "visible";
-    //     xml.open("POST","http://localhost:3000/eliminar",true);
-    //     xml.onreadystatechange = function() {
-    //         if (xml.readyState == 4) {
-    //         transicion();
-    //         }
-    //     };
-    //     xml.setRequestHeader('Content-Type', 'application/json');
-    //     xml.send(JSON.stringify(data));
-    //     document.getElementById("spinner").style.display = "block";
-    //     document.getElementById("divTable").style.display='none';
-    //     $('#exampleModalCenter').modal('hide'); 
-    // }
     function eliminarPersonaje(idPersonaje) {
         var indice = determinoIndice(idPersonaje);
-        modoficarHeroe(indice, "BAJA");
+        document.getElementById("divTable").style.display = 'none';
+        document.getElementById("spinner").style.display = "block";
+        $('#exampleModalCenter').modal('hide');
+        setTimeout(function () {
+            modificarHeroe(indice, "BAJA");
+            mostrarHeroes();
+            $('#modalOK').modal('show');
+            document.getElementById("textoRespuesta").innerHTML = "Baja Exitosa";
+        }, 5000);
     }
     function determinoIndice(idPersonaje) {
         var retorno;
         var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
         for (var i = 0; i < heroesStorage.length; i++) {
-            var heroeActual = JSON.parse(heroesStorage[i]);
+            var heroeActual = heroesStorage[i];
             if (heroeActual.id == idPersonaje) {
                 retorno = i;
             }
@@ -223,6 +211,7 @@ var SegundoPARC;
         var edadHeroe = Number(celdas[4].innerHTML);
         var ladoHeroe = celdas[5].innerHTML;
         var heroeGlobal = new SegundoPARC.heroe(idHeroe, nombreHeroe, apellidoHeroe, aliasHeroe, edadHeroe, ladoHeroe);
+        heroeID = heroeGlobal.Id;
         document.getElementById("idHeroe").value = celdas[0].innerHTML;
         document.getElementById("nombreHeroe").value = celdas[1].innerHTML;
         document.getElementById("apellidoHeroe").value = celdas[2].innerHTML;
@@ -237,10 +226,10 @@ var SegundoPARC;
         document.getElementById("btnEliminar").style.display = 'block';
     }
     var auxEmpleado;
-    function modoficarHeroe(indice, auxEmpleado) {
+    function modificarHeroe(indice, auxEmpleado) {
         var indice = indice;
         var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
-        var heroe = JSON.parse(JSON.parse(localStorage.LocalHeroes)[indice]);
+        var heroe = JSON.parse(localStorage.LocalHeroes)[indice];
         if (auxEmpleado == "MODIFICAR") {
             // persona._nombre = String ($('#nombre').val());
             // persona._edad   = Number ($('#edad').val());
@@ -267,8 +256,8 @@ var SegundoPARC;
         var HeroesStringNew = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
         delete HeroesStringNew[indice];
         var objJsonResp = HeroesStringNew.filter(function (x) { return x !== null; });
-        objJsonResp.push(JSON.stringify(heroe));
+        // objJsonResp.push( heroe);
         localStorage.LocalHeroes = "";
-        localStorage.setItem("Empleados", JSON.stringify(objJsonResp));
+        localStorage.setItem("LocalHeroes", JSON.stringify(objJsonResp));
     }
 })(SegundoPARC || (SegundoPARC = {}));

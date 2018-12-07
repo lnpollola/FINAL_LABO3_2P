@@ -1,9 +1,9 @@
 namespace SegundoPARC{
 
     
-    let heroeID;
+    var heroeID:any;
     //Creo un Héroe Global para manejar datos
-    var heroeGlobal = { "id":"","nombre":"","apellido":"","alias":"","edad":"","lado":""}
+    // var heroeGlobal = { "id":"","nombre":"","apellido":"","alias":"","edad":"","lado":""}
 
     
 
@@ -32,7 +32,7 @@ namespace SegundoPARC{
         });
     
         $("#btnEliminar").click(function() { 
-            let idActual =Number(heroeGlobal.id);
+            let idActual =Number($("#idHeroe").val());
 
             eliminarPersonaje(idActual);
         });
@@ -50,7 +50,7 @@ namespace SegundoPARC{
             document.getElementById("btnModificar")!.style.display='none';
             document.getElementById("btnEliminar")!.style.display='none';
 
-            traigoUltimoID();
+            // traigoUltimoID();
         });
 
     
@@ -268,51 +268,31 @@ function altaPersonaje() {
 
         $('#exampleModalCenter').modal('show'); 
 
-
-     
-    
     
     }
-
-
-
-
-
-
-
-    // function eliminarHeroe(heroe) {
-        
-    //     var data = {
-    //         "collection":"heroes",
-    //         "id": heroe.id
-    //     }
-    //     //AGREGAR CODIGO PARA ELIMINAR EL HEROE
-    //     var spinner = document.getElementById("spinner");
-    //     spinner.style.visibility = "visible";
-
-    //     xml.open("POST","http://localhost:3000/eliminar",true);
-
-    //     xml.onreadystatechange = function() {
-    //         if (xml.readyState == 4) {
-    //         transicion();
-    //         }
-    //     };
-
-    //     xml.setRequestHeader('Content-Type', 'application/json');
-    //     xml.send(JSON.stringify(data));
-
-    //     document.getElementById("spinner").style.display = "block";
-    //     document.getElementById("divTable").style.display='none';
-    //     $('#exampleModalCenter').modal('hide'); 
-    // }
 
     
 function eliminarPersonaje(idPersonaje:number):void
 {
     var indice = determinoIndice(idPersonaje);
-    modoficarHeroe(indice,"BAJA");
-} 
+   
 
+    document.getElementById("divTable")!.style.display='none';
+    document.getElementById("spinner")!.style.display = "block";
+    $('#exampleModalCenter').modal('hide'); 
+
+    setTimeout(function (){
+
+        modificarHeroe(indice,"BAJA");
+        mostrarHeroes();
+
+        $('#modalOK').modal('show');
+        document.getElementById("textoRespuesta")!.innerHTML = "Baja Exitosa";
+
+      }, 5000); 
+    
+    
+} 
 
 function determinoIndice (idPersonaje:number)
 {
@@ -324,7 +304,7 @@ function determinoIndice (idPersonaje:number)
 
     for (var i = 0; i < heroesStorage.length ; i++) 
     {
-       let heroeActual = JSON.parse(heroesStorage[i]);
+       let heroeActual = heroesStorage[i];
        if (heroeActual.id == idPersonaje)
        {retorno = i;}
     }
@@ -358,7 +338,7 @@ function mostrarFormulario()
         edadHeroe    ,
         ladoHeroe    
       );
-
+      heroeID = heroeGlobal.Id;
     (<HTMLInputElement>document.getElementById("idHeroe")).value        = celdas[0].innerHTML; 
     (<HTMLInputElement>document.getElementById("nombreHeroe")).value    = celdas[1].innerHTML;
     (<HTMLInputElement>document.getElementById("apellidoHeroe")).value  = celdas[2].innerHTML;
@@ -379,7 +359,7 @@ function mostrarFormulario()
 
 var auxEmpleado;
 
-function modoficarHeroe(indice:any , auxEmpleado:any):void
+function modificarHeroe(indice:any , auxEmpleado:any):void
 {
     var indice = indice;
     let heroesStorage:any|null =  JSON.parse(
@@ -387,7 +367,7 @@ function modoficarHeroe(indice:any , auxEmpleado:any):void
     )
         ; 
 
-    var heroe = JSON.parse(JSON.parse(localStorage.LocalHeroes)[indice]);
+    var heroe = JSON.parse(localStorage.LocalHeroes)[indice];
 
     if (auxEmpleado == "MODIFICAR")
     {
@@ -423,9 +403,9 @@ function armoJSON(indice:any,heroe:any)
     let HeroesStringNew  = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
     delete HeroesStringNew[indice];
     var objJsonResp = HeroesStringNew.filter(function(x:any) { return x !== null });
-    objJsonResp.push( JSON.stringify(heroe));
+    // objJsonResp.push( heroe);
     localStorage.LocalHeroes = "";
-    localStorage.setItem("Empleados",JSON.stringify(objJsonResp));
+    localStorage.setItem("LocalHeroes",JSON.stringify(objJsonResp));
 } 
 
 
