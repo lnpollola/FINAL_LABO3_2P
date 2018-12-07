@@ -130,34 +130,22 @@ var SegundoPARC;
             });
             heroesStorage = stringFinal;
         }
-        // $("#optionNull").
         if ($('#filtrarPor').val() == "todos") {
             location.reload();
         }
         for (var i = 0; i < heroesStorage.length; i++) {
-            // let animalActual = JSON.parse(heroesStorage[i]);
-            var animalActual = void 0;
-            if (valor) {
-                animalActual = heroesStorage[i];
-            }
-            else {
-                animalActual = JSON.parse(heroesStorage[i]);
-            }
-            seccionPersonajes += "<tr>      <td hidden>" + animalActual.ID + "</td>" +
-                "<td class='col1'>" + animalActual.nombre + "</td>" +
-                "<td class='col2'>" + animalActual.cantPatas + "</td>" +
-                "<td class='col3'>" + animalActual.tipo + "</td>" +
-                "<td class='col4'>" + animalActual.ruido + "</td>" +
-                //   "<td>" +      personasCompleto[i].apellido + "</td>" +
-                //   "<td>" +      personasCompleto[i].fecha    + "</td>" +
-                //   "<td>" +      personasCompleto[i].sexo     + "</td>"+
-                //   "<td>" + "<img src='"+ personasCompleto[i].foto + "'id='imgMuestro' height='80'>"+
-                //   "<input type='file' "+" hidden>"+"</td>"+
-                // "<td>"+"<button class='btn btn-outline-warning' data-toggle='modal' data-target='#myModal' id='addPopup' hidden=>Modificar"+"<i class='fa fa-folder'></i>"+"</button>"+
-                // "<button class='btn btn-outline-danger' data-toggle='modal' data-target='#myModal' id='addPopup'>Eliminar"+"<i class='fa fa-trash'></i></button></td>"+
+            seccionPersonajes += "<tr><td>" + heroesStorage[i].id + "</td>" +
+                "<td>" + heroesStorage[i].nombre + "</td>" +
+                "<td>" + heroesStorage[i].apellido + "</td>" +
+                "<td>" + heroesStorage[i].alias + "</td>" +
+                "<td>" + heroesStorage[i].edad + "</td>" +
+                "<td>" + heroesStorage[i].lado + "</td>" +
                 "</tr>";
             tBodyTable.innerHTML = seccionPersonajes;
         }
+        transicionSpinner();
+        //CARGA DE TABLA INICIAL
+        document.getElementById("divTable").style.display = 'block';
     }
     // function eliminarAnimal(idAnimal:number):void
     // {
@@ -175,5 +163,24 @@ var SegundoPARC;
     //        {retorno = i;}
     //     }
     //     return retorno;
+    // }
+    ///SPINNER
+    function transicionSpinner() {
+        document.getElementById("spinner").style.display = "none";
+    }
+    // function transicion() {
+    //     if (xml.readyState ==4) 
+    //     {
+    //         if (xml.status==200) 
+    //         {
+    //             // alert( JSON.parse(xml.response).message );
+    //             $('#modalOK').modal('show');
+    //             document.getElementById("textoRespuesta")!.innerHTML = JSON.parse(xml.response).message;
+    //             document.getElementById("formAlta")!.reset();
+    //             mostrarHeroes();
+    //         } 
+    //         else
+    //         {document.getElementById("spinner")!.style.display = "none";}
+    //     }
     // }
 })(SegundoPARC || (SegundoPARC = {}));
