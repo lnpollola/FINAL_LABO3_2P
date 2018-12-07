@@ -176,10 +176,10 @@ var SegundoPARC;
         document.getElementById("spinner").style.display = "block";
         $('#exampleModalCenter').modal('hide');
         setTimeout(function () {
-            modificarHeroe(indice, "BAJA");
+            modificarHeroe(indice, "MODIFICAR");
             mostrarHeroes();
             $('#modalOK').modal('show');
-            document.getElementById("textoRespuesta").innerHTML = "Baja Exitosa";
+            document.getElementById("textoRespuesta").innerHTML = "Modificacion exitosa";
         }, 5000);
     }
     function determinoIndice(idPersonaje) {
@@ -229,32 +229,32 @@ var SegundoPARC;
         var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
         var heroe = JSON.parse(localStorage.LocalHeroes)[indice];
         if (auxEmpleado == "MODIFICAR") {
-            // persona._nombre = String ($('#nombre').val());
-            // persona._edad   = Number ($('#edad').val());
-            // persona._sexo   = String ($('#sexo').val());
-            // persona._tipo  = tipoEMP ; 
-            // persona._clave  = String ($('#ClaveUsuario').val());
-            // var fechaIniciocontrato =  String ($('#fechaDesde').val());
-            // if(fechaIniciocontrato=="")
-            // {
-            //     persona._fechaDesde = new Date().toLocaleDateString();
-            // } 
-            // else
-            // { 
-            //     persona._fechaDesde = fechaIniciocontrato;
-            // }
-            // persona._fechaHasta = String ($('#fechaHasta').val());;
+            heroe.nombre = String($("#nombreHeroe").val());
+            heroe.apellido = String($("#apellidoHeroe").val());
+            heroe.alias = String($("#aliasHeroe").val());
+            heroe.edad = Number($("#edadHeroe").val());
+            if ($("#ladoHeroe").prop("checked")) {
+                heroe.ladoHeroe = "Heroe";
+            }
+            else {
+                heroe.lado = "Villano";
+            }
         }
-        else {
-            // persona._estado = auxEmpleado;
-        }
-        armoJSON(indice, heroe);
+        armoJSONmodif(indice, heroe);
     }
     function armoJSON(indice, heroe) {
         var HeroesStringNew = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
         delete HeroesStringNew[indice];
         var objJsonResp = HeroesStringNew.filter(function (x) { return x !== null; });
         // objJsonResp.push( heroe);
+        localStorage.LocalHeroes = "";
+        localStorage.setItem("LocalHeroes", JSON.stringify(objJsonResp));
+    }
+    function armoJSONmodif(indice, heroe) {
+        var HeroesStringNew = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
+        delete HeroesStringNew[indice];
+        var objJsonResp = HeroesStringNew.filter(function (x) { return x !== null; });
+        objJsonResp.push(heroe);
         localStorage.LocalHeroes = "";
         localStorage.setItem("LocalHeroes", JSON.stringify(objJsonResp));
     }

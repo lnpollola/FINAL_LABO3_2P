@@ -280,7 +280,6 @@ function eliminarPersonaje(idPersonaje:number):void
 function modificarPersonaje(idPersonaje:number):void
 {
     var indice = determinoIndice(idPersonaje);
-   
 
     document.getElementById("divTable")!.style.display='none';
     document.getElementById("spinner")!.style.display = "block";
@@ -288,11 +287,11 @@ function modificarPersonaje(idPersonaje:number):void
 
     setTimeout(function (){
 
-        modificarHeroe(indice,"BAJA");
+        modificarHeroe(indice,"MODIFICAR");
         mostrarHeroes();
 
         $('#modalOK').modal('show');
-        document.getElementById("textoRespuesta")!.innerHTML = "Baja Exitosa";
+        document.getElementById("textoRespuesta")!.innerHTML = "Modificacion exitosa";
 
       }, 5000); 
     
@@ -381,31 +380,17 @@ function modificarHeroe(indice:any , auxEmpleado:any):void
 
     if (auxEmpleado == "MODIFICAR")
     {
- 
-        // persona._nombre = String ($('#nombre').val());
-        // persona._edad   = Number ($('#edad').val());
-        // persona._sexo   = String ($('#sexo').val());
-        // persona._tipo  = tipoEMP ; 
-        // persona._clave  = String ($('#ClaveUsuario').val());
-        // var fechaIniciocontrato =  String ($('#fechaDesde').val());
-        // if(fechaIniciocontrato=="")
-        // {
-        //     persona._fechaDesde = new Date().toLocaleDateString();
-        // } 
-        // else
-        // { 
-        //     persona._fechaDesde = fechaIniciocontrato;
-        // }
-        // persona._fechaHasta = String ($('#fechaHasta').val());;
-    }
-    else 
-    {
-        // persona._estado = auxEmpleado;
 
+        heroe.nombre     =String($("#nombreHeroe").val());
+        heroe.apellido   =String($("#apellidoHeroe").val());
+        heroe.alias      =String($("#aliasHeroe").val());
+        heroe.edad       =Number($("#edadHeroe").val());
 
+        if ( $("#ladoHeroe").prop("checked") ) {heroe.ladoHeroe = "Heroe";}
+        else { heroe.lado = "Villano";}   
     }
     
-    armoJSON(indice,heroe);
+    armoJSONmodif(indice,heroe);
 }
 
 function armoJSON(indice:any,heroe:any)
@@ -414,6 +399,16 @@ function armoJSON(indice:any,heroe:any)
     delete HeroesStringNew[indice];
     var objJsonResp = HeroesStringNew.filter(function(x:any) { return x !== null });
     // objJsonResp.push( heroe);
+    localStorage.LocalHeroes = "";
+    localStorage.setItem("LocalHeroes",JSON.stringify(objJsonResp));
+} 
+
+function armoJSONmodif(indice:any,heroe:any)
+{
+    let HeroesStringNew  = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
+    delete HeroesStringNew[indice];
+    var objJsonResp = HeroesStringNew.filter(function(x:any) { return x !== null });
+    objJsonResp.push(heroe);
     localStorage.LocalHeroes = "";
     localStorage.setItem("LocalHeroes",JSON.stringify(objJsonResp));
 } 
