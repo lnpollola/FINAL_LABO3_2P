@@ -18,11 +18,14 @@
 
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="./scripts/jquery.js"></script>
-    <script src="./scripts/controlador.js"></script>
-    <script src="./scripts/funciones.js"></script>
-    <script src="./scripts/index.js"></script>      
+    
+    <!-- SCRIPTS -->
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="./clases/app.js"></script> 
+    <script src="./clases/personaje.js"></script>
+    <script src="./clases/heroe.js"></script>
     <title>ABM SuperHeroes</title>
+
 </head>
 
 <!-- ERROR modal -->
@@ -61,6 +64,10 @@
                 <button type="button" id="botonAgregarHeroe" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter">
                         Agregar HÉROE
                   </button>
+                  
+        <button class="btn btn-outline-info" id="btnLimpia">Limpiar LocalStorage
+          <i class="glyphicon glyphicon-plus"></i>
+        </button>
         </div>
     <!-- </div> -->
 
