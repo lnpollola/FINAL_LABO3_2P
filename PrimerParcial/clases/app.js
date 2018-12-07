@@ -2,6 +2,8 @@
 var SegundoPARC;
 (function (SegundoPARC) {
     var heroeID;
+    //Creo un Héroe Global para manejar datos
+    var heroeGlobal = { "id": "", "nombre": "", "apellido": "", "alias": "", "edad": "", "lado": "" };
     $(document).ready(function () {
         mostrarHeroes();
         //Asigno botones por JQUERY
@@ -15,15 +17,26 @@ var SegundoPARC;
         $("#btnAgregarConfirm").click(function () {
             altaPersonaje();
         });
-        // $("#btnEliminar").click(function() { 
-        //     ejecutarTransaccion("Baja");
-        // });
+        $("#btnEliminar").click(function () {
+            var idActual = Number(heroeGlobal.id);
+            eliminarPersonaje(idActual);
+        });
+        $("#botonAgregarHeroe").click(function () {
+            canceloForm();
+            //QUITO BOTON DE AGREGAR
+            document.getElementById("cancelarForm").style.display = 'block';
+            document.getElementById("btnAgregarConfirm").style.display = 'block';
+            //ACTIVO BOTONES DE MODIFICAR Y ELIMINAR
+            document.getElementById("btnModificar").style.display = 'none';
+            document.getElementById("btnEliminar").style.display = 'none';
+            traigoUltimoID();
+        });
         // $("#btnModificar").click(function() { 
         //     ejecutarTransaccion("Modificacion");
         // });
-        // $("#tBodyTable").click(function () {
-        //     ejecutarTransaccion("Mostrar");
-        // });
+        $("#tBodyTable").click(function () {
+            mostrarFormulario();
+        });
         // $("#checkFORM :checkbox").on("click",function() {
         //     var checkboxON = $('input:checkbox:checked.checkItems').map(function() { return this.value; }).get();
         //     if(checkboxON.length == 0)         {  location.reload();}
@@ -160,22 +173,102 @@ var SegundoPARC;
             $('#modalERROR').modal('show');
         }
         $('#exampleModalCenter').modal('show');
-        //    if (radGatoA) {
-        //     let unGato: gato = new gato(nombreA,sondioA);
-        //     heroesLista.push(JSON.stringify(unGato));       
-        //    }
-        //    else if (radPerroA) {
-        //     let unPerro: perro = new perro(nombreA,sondioA);
-        //     heroesLista.push(JSON.stringify(unPerro));
-        //    }
-        //    else{
-        //     let unPajaro: pajaro = new pajaro(nombreA,sondioA);
-        //     heroesLista.push(JSON.stringify(unPajaro));
-        //    }
-        //    heroes.forEach(Programa.hablar);
-        //    location.reload();
-        //    let unJson = JSON.parse(localStorage.getItem("heroes")); //me dijo el profesor
-        //    alert(unJson[0]);
-        //    alert(localStorage.getItem("heroes"));
+    }
+    // function eliminarHeroe(heroe) {
+    //     var data = {
+    //         "collection":"heroes",
+    //         "id": heroe.id
+    //     }
+    //     //AGREGAR CODIGO PARA ELIMINAR EL HEROE
+    //     var spinner = document.getElementById("spinner");
+    //     spinner.style.visibility = "visible";
+    //     xml.open("POST","http://localhost:3000/eliminar",true);
+    //     xml.onreadystatechange = function() {
+    //         if (xml.readyState == 4) {
+    //         transicion();
+    //         }
+    //     };
+    //     xml.setRequestHeader('Content-Type', 'application/json');
+    //     xml.send(JSON.stringify(data));
+    //     document.getElementById("spinner").style.display = "block";
+    //     document.getElementById("divTable").style.display='none';
+    //     $('#exampleModalCenter').modal('hide'); 
+    // }
+    function eliminarPersonaje(idPersonaje) {
+        var indice = determinoIndice(idPersonaje);
+        modoficarHeroe(indice, "BAJA");
+    }
+    function determinoIndice(idPersonaje) {
+        var retorno;
+        var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
+        for (var i = 0; i < heroesStorage.length; i++) {
+            var heroeActual = JSON.parse(heroesStorage[i]);
+            if (heroeActual.id == idPersonaje) {
+                retorno = i;
+            }
+        }
+        return retorno;
+    }
+    function mostrarFormulario() {
+        $('#exampleModalCenter').modal('show');
+        var target = event.target || event.srcElement;
+        var fila = event.target.parentNode;
+        // let fila = target.parentNode;
+        var celdas = fila.getElementsByTagName("td");
+        //ARMO PERSONAJE
+        var idHeroe = Number(celdas[0].innerHTML);
+        var nombreHeroe = celdas[1].innerHTML;
+        var apellidoHeroe = celdas[2].innerHTML;
+        var aliasHeroe = celdas[3].innerHTML;
+        var edadHeroe = Number(celdas[4].innerHTML);
+        var ladoHeroe = celdas[5].innerHTML;
+        var heroeGlobal = new SegundoPARC.heroe(idHeroe, nombreHeroe, apellidoHeroe, aliasHeroe, edadHeroe, ladoHeroe);
+        document.getElementById("idHeroe").value = celdas[0].innerHTML;
+        document.getElementById("nombreHeroe").value = celdas[1].innerHTML;
+        document.getElementById("apellidoHeroe").value = celdas[2].innerHTML;
+        document.getElementById("aliasHeroe").value = celdas[3].innerHTML;
+        document.getElementById("edadHeroe").value = celdas[4].innerHTML;
+        document.getElementById("ladoHeroe").value = celdas[5].innerHTML;
+        //QUITO BOTON DE AGREGAR
+        document.getElementById("btnAgregarConfirm").style.display = 'none';
+        document.getElementById("cancelarForm").style.display = 'none';
+        //ACTIVO BOTONES DE MODIFICAR Y ELIMINAR
+        document.getElementById("btnModificar").style.display = 'block';
+        document.getElementById("btnEliminar").style.display = 'block';
+    }
+    var auxEmpleado;
+    function modoficarHeroe(indice, auxEmpleado) {
+        var indice = indice;
+        var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
+        var heroe = JSON.parse(JSON.parse(localStorage.LocalHeroes)[indice]);
+        if (auxEmpleado == "MODIFICAR") {
+            // persona._nombre = String ($('#nombre').val());
+            // persona._edad   = Number ($('#edad').val());
+            // persona._sexo   = String ($('#sexo').val());
+            // persona._tipo  = tipoEMP ; 
+            // persona._clave  = String ($('#ClaveUsuario').val());
+            // var fechaIniciocontrato =  String ($('#fechaDesde').val());
+            // if(fechaIniciocontrato=="")
+            // {
+            //     persona._fechaDesde = new Date().toLocaleDateString();
+            // } 
+            // else
+            // { 
+            //     persona._fechaDesde = fechaIniciocontrato;
+            // }
+            // persona._fechaHasta = String ($('#fechaHasta').val());;
+        }
+        else {
+            // persona._estado = auxEmpleado;
+        }
+        armoJSON(indice, heroe);
+    }
+    function armoJSON(indice, heroe) {
+        var HeroesStringNew = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
+        delete HeroesStringNew[indice];
+        var objJsonResp = HeroesStringNew.filter(function (x) { return x !== null; });
+        objJsonResp.push(JSON.stringify(heroe));
+        localStorage.LocalHeroes = "";
+        localStorage.setItem("Empleados", JSON.stringify(objJsonResp));
     }
 })(SegundoPARC || (SegundoPARC = {}));
