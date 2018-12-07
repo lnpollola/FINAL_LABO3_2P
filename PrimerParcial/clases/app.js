@@ -240,8 +240,11 @@ var SegundoPARC;
             else {
                 heroe.lado = "Villano";
             }
+            armoJSONmodif(indice, heroe);
         }
-        armoJSONmodif(indice, heroe);
+        else {
+            armoJSON(indice, heroe);
+        }
     }
     function armoJSON(indice, heroe) {
         var HeroesStringNew = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");

@@ -379,9 +379,14 @@ function modificarHeroe(indice:any , auxEmpleado:any):void
 
         if ( $("#ladoHeroe").prop("checked") ) {heroe.ladoHeroe = "Heroe";}
         else { heroe.lado = "Villano";}   
+        armoJSONmodif(indice,heroe);
+    }
+    else 
+    {
+        armoJSON(indice,heroe);
     }
     
-    armoJSONmodif(indice,heroe);
+   
 }
 
 function armoJSON(indice:any,heroe:any)
