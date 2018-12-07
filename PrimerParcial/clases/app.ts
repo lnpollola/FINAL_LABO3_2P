@@ -58,7 +58,11 @@ namespace SegundoPARC{
             document.getElementById("idSeleccionado")!.style.display='none';
         });
 
-    
+     $("#filtrarPor").change(function(){
+            let valorFiltro = $('#filtrarPor').val();
+            mostrarHeroes(valorFiltro);
+            // tablaAux = undefined;
+        });
     
         $("#tBodyTable").click(function () {
             mostrarFormulario();
@@ -98,34 +102,7 @@ namespace SegundoPARC{
             
         // });
 
-        // $("#filtrarPor").change(function(){
-        //     let valorFiltro = $('#filtrarPor').map(function() { return this.value; }).get();
-        //     mostrarHeroes(valorFiltro);
-        //     // tablaAux = undefined;
-        // });
-
-        // $("#tablaID tbody tr").dblclick(function (e) {
-            
-        
-        //    $('#myModal').modal('show');
-
-        //    $("#btnModificar").css("visibility","visible");
-        //    $("#btnEliminar").css("visibility","visible");
-        //    $("#btnAgregar").css("visibility","hidden");
-
-      
-        //     let idSeleccionado = $(e.target).prev().text();
-        //     let nombreSelec = $(e.target).text();
-        //     let cantPatSelec = $(e.target).next().text();
-        //     let tipoSelec = $(e.target).next().next().text();
-        //     let ruidoSelec = $(e.target).next().next().next().text();
-
-        //    $("#divTipo").css("visibility","hidden");
-
-        //    $('#nombreA').attr('value', nombreSelec);
-        //    $('#sondioA').attr('value', ruidoSelec);
-
-        // });
+       
         
     });//fin document.ready
 
@@ -139,17 +116,19 @@ function mostrarHeroes(valor?:any):void {
         var tBodyTable = $('#tBodyTable')[0];
         var seccionPersonajes:string = "";   
 
-        if(valor)
+        if(valor && valor!='todos')
         {
         //MUESTRO EL LISTADO DE EmpleadoS SEGUN FILTRO
            let stringFinal = heroesStorage
                                     .filter(function(heroe:any){
-                                        let heroeRet = JSON.parse(heroe);
-                                        return heroeRet.tipo == valor;
+                                        // let heroeRet = JSON.parse(heroe);
+                                        // return heroeRet.tipo == valor;
+                                        return heroe.lado == valor;
                                     })
                                     .map(function(heroe:any){
-                                        let heroeRet = JSON.parse(heroe);
-                                        return heroeRet;
+                                        // let heroeRet = JSON.parse(heroe);
+                                        // return heroeRet;
+                                        return heroe;
                                     });   
                         heroesStorage= stringFinal;
         }
