@@ -43,14 +43,30 @@ var SegundoPARC;
         $("#tBodyTable").click(function () {
             mostrarFormulario();
         });
-        // $("#checkFORM :checkbox").on("click",function() {
-        //     var checkboxON = $('input:checkbox:checked.checkItems').map(function() { return this.value; }).get();
-        //     if(checkboxON.length == 0)         {  location.reload();}
-        //     checkboxON.includes("nombreF")       == true ? $(".col1").css("display","none"):null;
-        //     checkboxON.includes("numPatasF")       == true ? $(".col2").css("display","none"):null;
-        //     checkboxON.includes("tipoF")       == true ? $(".col3").css("display","none"):null;
-        //     checkboxON.includes("sonidoF")       == true ? $(".col4").css("display","none"):null;
+        // $("#checkFORM : checkbox").on("click",function() {
+        //     var checkedValues = $(":checkbox:checked").map(function() {
+        //         return this.value;
+        //     }).get();
+        //     $("tbody tr").hide();
+        //     for (var i = 0; i < checkedValues.length; i++) {
+        //         $("tbody tr td:contains('" + checkedValues[i] + "')").parent("tr").show();
+        //     }
         // });
+        // $('input[type="checkbox"]').attr('checked', 'checked');
+        $("#checkFORM :checkbox").on("click", function () {
+            var checkboxON = $('input:checkbox:checked.checkItems').map(function () { return this.value; }).get();
+            if (checkboxON.length == 0) {
+                location.reload();
+            }
+            else {
+                checkboxON.includes("ID") == true ? $(".col1").css("display", "none") : null;
+                checkboxON.includes("NOMBRE") == true ? $(".col2").css("display", "none") : null;
+                checkboxON.includes("APELLIDO") == true ? $(".col3").css("display", "none") : null;
+                checkboxON.includes("ALIAS") == true ? $(".col4").css("display", "none") : null;
+                checkboxON.includes("EDAD") == true ? $(".col5").css("display", "none") : null;
+                checkboxON.includes("LADO") == true ? $(".col6").css("display", "none") : null;
+            }
+        });
     }); //fin document.ready
     function mostrarHeroes(valor) {
         var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
@@ -71,12 +87,12 @@ var SegundoPARC;
             location.reload();
         }
         for (var i = 0; i < heroesStorage.length; i++) {
-            seccionPersonajes += "<tr><td>" + heroesStorage[i].id + "</td>" +
-                "<td>" + heroesStorage[i].nombre + "</td>" +
-                "<td>" + heroesStorage[i].apellido + "</td>" +
-                "<td>" + heroesStorage[i].alias + "</td>" +
-                "<td>" + heroesStorage[i].edad + "</td>" +
-                "<td>" + heroesStorage[i].lado + "</td>" +
+            seccionPersonajes += "<tr class='datacell'><td class='col1'>" + heroesStorage[i].id + "</td>" +
+                "<td class='col2'>" + heroesStorage[i].nombre + "</td>" +
+                "<td class='col3'>" + heroesStorage[i].apellido + "</td>" +
+                "<td class='col4'>" + heroesStorage[i].alias + "</td>" +
+                "<td class='col5'>" + heroesStorage[i].edad + "</td>" +
+                "<td class='col6'>" + heroesStorage[i].lado + "</td>" +
                 "</tr>";
             tBodyTable.innerHTML = seccionPersonajes;
         }

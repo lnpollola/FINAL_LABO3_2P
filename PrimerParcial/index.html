@@ -96,6 +96,36 @@
    
         
       </div>
+      
+
+      <form id="checkFORM">
+          <div class="col-md-offset-1">
+            <div class="checkbox">
+                
+                <caption><h5 style="color: black;">SELECCIONAR COLUMNAS NO VISIBLES:</h5></caption>
+                
+                <label>
+                    <input type="checkbox" style="color: black;"class="checkItems" name="ID" id="ID" value="ID">ID
+                </label>
+    
+                <label>
+                  <input type="checkbox" style="color: black;"  class="checkItems" name="NOMBRE" id="NOMBRE" value="NOMBRE">NOMBRE
+                </label>
+    
+                <label>
+                    <input type="checkbox" style="color: black;"  class="checkItems" name="APELLIDO" id="APELLIDO" value="APELLIDO">APELLIDO
+                </label>
+                <label>
+                  <input type="checkbox" style="color: black;" class="checkItems" name="ALIAS" id="ALIAS" value="ALIAS">ALIAS</label>
+
+                  <label>
+                      <input type="checkbox" style="color: black;" class="checkItems" name="EDAD" id="EDAD" value="EDAD">EDAD
+                  </label>
+                  <label>
+                    <input type="checkbox" style="color: black;" class="checkItems" name="LADO" id="LADO" value="LADO">LADO</label>
+            </div>
+          </div>
+        </form>      
    
     <!-- INICIO TABLA -->
   
@@ -105,13 +135,13 @@
         <div id="divTable" style="display: none; margin-top: 3%;"  >
             <table class="table  table-striped table-dark table-bordered table-hover" id="tablaID">
                 <thead>
-                  <tr>
-                    <th  scope="col">ID</th>
-                    <th  scope="col">NOMBRE</th>
-                    <th  scope="col">APELLIDO</th>
-                    <th  scope="col">ALIAS</th>
-                    <th  scope="col">EDAD</th>
-                    <th  scope="col">LADO</th>
+                  <tr class="headercell">
+                    <th class="col1" scope="col1">ID</th>
+                    <th class="col2" scope="col2">NOMBRE</th>
+                    <th class="col3" scope="col3">APELLIDO</th>
+                    <th class="col4" scope="col4">ALIAS</th>
+                    <th class="col5" scope="col5">EDAD</th>
+                    <th class="col6" scope="col6">LADO</th>
                   </tr>
                 </thead>
                 <tbody id="tBodyTable"></tbody>
