@@ -2,18 +2,13 @@ namespace SegundoPARC{
 
     
     var heroeID:any;
-    //Creo un Héroe Global para manejar datos
-    // var heroeGlobal = { "id":"","nombre":"","apellido":"","alias":"","edad":"","lado":""}
-
-    
+ 
 
     $(document).ready(function () {
         
         
 
         mostrarHeroes();
-
-
         //Asigno botones por JQUERY
         $("#btnLimpia").click(function () {
 
@@ -32,10 +27,18 @@ namespace SegundoPARC{
         });
     
         $("#btnEliminar").click(function() { 
-            let idActual =Number($("#idHeroe").val());
+            let idActual =Number($("#idSeleccionado").val());
 
             eliminarPersonaje(idActual);
         });
+
+        
+        $("#btnModificar").click(function() { 
+            let idActual =Number($("#idSeleccionado").val());
+            modificarPersonaje(idActual);
+
+        });
+    
 
         
         $("#botonAgregarHeroe").click(function() { 
@@ -50,13 +53,11 @@ namespace SegundoPARC{
             document.getElementById("btnModificar")!.style.display='none';
             document.getElementById("btnEliminar")!.style.display='none';
 
-            // traigoUltimoID();
+            //ID PARA DAR DE ALTA
+            document.getElementById("idHeroe")!.style.display='block';
+            document.getElementById("idSeleccionado")!.style.display='none';
         });
 
-    
-        // $("#btnModificar").click(function() { 
-        //     ejecutarTransaccion("Modificacion");
-        // });
     
     
         $("#tBodyTable").click(function () {
@@ -177,25 +178,6 @@ function mostrarHeroes(valor?:any):void {
         document.getElementById("divTable")!.style.display='block';
 }
 
-// function eliminarAnimal(idAnimal:number):void
-// {
-//     var indice = determinoIndice(idAnimal);
-//     modificarEmpleado(indice,Clases.estadoCLIEMP.BAJA);
-// } 
-
-// function determinoIndice (idEmpleado:number)
-// {
-//     var retorno;
-//     let heroesStorage:string|null =  JSON.parse(localStorage.getItem("LocalHeroes") || "[]"); 
-//     for (var i = 0; i < heroesStorage.length ; i++) 
-//     {
-//        let empleadoActual = JSON.parse(heroesStorage[i]);
-//        if (empleadoActual._id == idEmpleado)
-//        {retorno = i;}
-//     }
-//     return retorno;
-// }
-
 
 
 ///SPINNER
@@ -294,6 +276,29 @@ function eliminarPersonaje(idPersonaje:number):void
     
 } 
 
+    
+function modificarPersonaje(idPersonaje:number):void
+{
+    var indice = determinoIndice(idPersonaje);
+   
+
+    document.getElementById("divTable")!.style.display='none';
+    document.getElementById("spinner")!.style.display = "block";
+    $('#exampleModalCenter').modal('hide'); 
+
+    setTimeout(function (){
+
+        modificarHeroe(indice,"BAJA");
+        mostrarHeroes();
+
+        $('#modalOK').modal('show');
+        document.getElementById("textoRespuesta")!.innerHTML = "Baja Exitosa";
+
+      }, 5000); 
+    
+    
+} 
+
 function determinoIndice (idPersonaje:number)
 {
     var retorno;
@@ -314,6 +319,9 @@ function determinoIndice (idPersonaje:number)
 function mostrarFormulario()
 {
     $('#exampleModalCenter').modal('show'); 
+
+    document.getElementById("idHeroe")!.style.display='none';
+    document.getElementById("idSeleccionado")!.style.display='block';
 
     let target = event!.target || event!.srcElement;
 
@@ -339,7 +347,9 @@ function mostrarFormulario()
         ladoHeroe    
       );
       heroeID = heroeGlobal.Id;
-    (<HTMLInputElement>document.getElementById("idHeroe")).value        = celdas[0].innerHTML; 
+
+      
+    (<HTMLInputElement>document.getElementById("idSeleccionado")).value        = celdas[0].innerHTML; 
     (<HTMLInputElement>document.getElementById("nombreHeroe")).value    = celdas[1].innerHTML;
     (<HTMLInputElement>document.getElementById("apellidoHeroe")).value  = celdas[2].innerHTML;
     (<HTMLInputElement>document.getElementById("aliasHeroe")).value     = celdas[3].innerHTML;

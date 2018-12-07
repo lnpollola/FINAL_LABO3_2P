@@ -2,8 +2,6 @@
 var SegundoPARC;
 (function (SegundoPARC) {
     var heroeID;
-    //Creo un Héroe Global para manejar datos
-    // var heroeGlobal = { "id":"","nombre":"","apellido":"","alias":"","edad":"","lado":""}
     $(document).ready(function () {
         mostrarHeroes();
         //Asigno botones por JQUERY
@@ -18,8 +16,12 @@ var SegundoPARC;
             altaPersonaje();
         });
         $("#btnEliminar").click(function () {
-            var idActual = Number($("#idHeroe").val());
+            var idActual = Number($("#idSeleccionado").val());
             eliminarPersonaje(idActual);
+        });
+        $("#btnModificar").click(function () {
+            var idActual = Number($("#idSeleccionado").val());
+            modificarPersonaje(idActual);
         });
         $("#botonAgregarHeroe").click(function () {
             canceloForm();
@@ -29,11 +31,10 @@ var SegundoPARC;
             //ACTIVO BOTONES DE MODIFICAR Y ELIMINAR
             document.getElementById("btnModificar").style.display = 'none';
             document.getElementById("btnEliminar").style.display = 'none';
-            // traigoUltimoID();
+            //ID PARA DAR DE ALTA
+            document.getElementById("idHeroe").style.display = 'block';
+            document.getElementById("idSeleccionado").style.display = 'none';
         });
-        // $("#btnModificar").click(function() { 
-        //     ejecutarTransaccion("Modificacion");
-        // });
         $("#tBodyTable").click(function () {
             mostrarFormulario();
         });
@@ -113,23 +114,6 @@ var SegundoPARC;
         //CARGA DE TABLA INICIAL
         document.getElementById("divTable").style.display = 'block';
     }
-    // function eliminarAnimal(idAnimal:number):void
-    // {
-    //     var indice = determinoIndice(idAnimal);
-    //     modificarEmpleado(indice,Clases.estadoCLIEMP.BAJA);
-    // } 
-    // function determinoIndice (idEmpleado:number)
-    // {
-    //     var retorno;
-    //     let heroesStorage:string|null =  JSON.parse(localStorage.getItem("LocalHeroes") || "[]"); 
-    //     for (var i = 0; i < heroesStorage.length ; i++) 
-    //     {
-    //        let empleadoActual = JSON.parse(heroesStorage[i]);
-    //        if (empleadoActual._id == idEmpleado)
-    //        {retorno = i;}
-    //     }
-    //     return retorno;
-    // }
     ///SPINNER
     function transicionSpinner() {
         document.getElementById("spinner").style.display = "none";
@@ -186,6 +170,18 @@ var SegundoPARC;
             document.getElementById("textoRespuesta").innerHTML = "Baja Exitosa";
         }, 5000);
     }
+    function modificarPersonaje(idPersonaje) {
+        var indice = determinoIndice(idPersonaje);
+        document.getElementById("divTable").style.display = 'none';
+        document.getElementById("spinner").style.display = "block";
+        $('#exampleModalCenter').modal('hide');
+        setTimeout(function () {
+            modificarHeroe(indice, "BAJA");
+            mostrarHeroes();
+            $('#modalOK').modal('show');
+            document.getElementById("textoRespuesta").innerHTML = "Baja Exitosa";
+        }, 5000);
+    }
     function determinoIndice(idPersonaje) {
         var retorno;
         var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
@@ -199,6 +195,8 @@ var SegundoPARC;
     }
     function mostrarFormulario() {
         $('#exampleModalCenter').modal('show');
+        document.getElementById("idHeroe").style.display = 'none';
+        document.getElementById("idSeleccionado").style.display = 'block';
         var target = event.target || event.srcElement;
         var fila = event.target.parentNode;
         // let fila = target.parentNode;
@@ -212,7 +210,7 @@ var SegundoPARC;
         var ladoHeroe = celdas[5].innerHTML;
         var heroeGlobal = new SegundoPARC.heroe(idHeroe, nombreHeroe, apellidoHeroe, aliasHeroe, edadHeroe, ladoHeroe);
         heroeID = heroeGlobal.Id;
-        document.getElementById("idHeroe").value = celdas[0].innerHTML;
+        document.getElementById("idSeleccionado").value = celdas[0].innerHTML;
         document.getElementById("nombreHeroe").value = celdas[1].innerHTML;
         document.getElementById("apellidoHeroe").value = celdas[2].innerHTML;
         document.getElementById("aliasHeroe").value = celdas[3].innerHTML;
