@@ -148,11 +148,15 @@ function mostrarHeroes(valor?:any):void {
             tBodyTable.innerHTML = seccionPersonajes;
         }
 
+        //Personaje mas Viejo
+        let personajeResult = determinoPersonajeEdad(personajeMasViejo(heroesStorage));
+        (<HTMLInputElement>document.getElementById("personajeViejo")).value = personajeResult.alias;
 
-        // (<HTMLInputElement>document.getElementById("promedioEdad")).value = promedioEdad();
-        (<HTMLInputElement>document.getElementById("personajeViejo")).value = personajeMasViejo(heroesStorage);
+        //Promedio de  edad
+        (<HTMLInputElement>document.getElementById("promedioEdad")).value = promedioEdad(heroesStorage);
 
         transicionSpinner();
+
         //CARGA DE TABLA INICIAL
         document.getElementById("divTable")!.style.display='block';
 }
@@ -177,6 +181,19 @@ function personajeMasViejo(arr:any) {
       return ( p < v.edad ? v.edad: p );
     },0);
   }
+
+function promedioEdad (heroes:any){
+    var acumEdad = heroes
+    .reduce(function(actual:any,siguiente:any){
+        return actual+siguiente.edad;
+    },0);
+
+    var cantidad = heroes
+    .reduce (function(actual:any,siguiente:any){
+        return actual + 1;
+    }, 0);
+    return (acumEdad / cantidad).toFixed(2);
+}
 
 
 function altaPersonaje() {
@@ -297,6 +314,23 @@ function determinoIndice (idPersonaje:number)
        let heroeActual = heroesStorage[i];
        if (heroeActual.id == idPersonaje)
        {retorno = i;}
+    }
+    return retorno;
+}
+
+function determinoPersonajeEdad (edad:number)
+{
+    var retorno;
+    let heroesStorage:any|null =  JSON.parse(
+        localStorage.getItem("LocalHeroes") || "[]"
+    )
+        ; 
+
+    for (var i = 0; i < heroesStorage.length ; i++) 
+    {
+       let heroeActual = heroesStorage[i];
+       if (heroeActual.edad == edad)
+       {retorno = heroeActual;}
     }
     return retorno;
 }

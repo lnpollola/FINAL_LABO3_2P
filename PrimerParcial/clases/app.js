@@ -94,8 +94,11 @@ var SegundoPARC;
                 "</tr>";
             tBodyTable.innerHTML = seccionPersonajes;
         }
-        // (<HTMLInputElement>document.getElementById("promedioEdad")).value = promedioEdad();
-        document.getElementById("personajeViejo").value = personajeMasViejo(heroesStorage);
+        //Personaje mas Viejo
+        var personajeResult = determinoPersonajeEdad(personajeMasViejo(heroesStorage));
+        document.getElementById("personajeViejo").value = personajeResult.alias;
+        //Promedio de  edad
+        document.getElementById("promedioEdad").value = promedioEdad(heroesStorage);
         transicionSpinner();
         //CARGA DE TABLA INICIAL
         document.getElementById("divTable").style.display = 'block';
@@ -114,6 +117,17 @@ var SegundoPARC;
         return arr.reduce(function (p, v) {
             return (p < v.edad ? v.edad : p);
         }, 0);
+    }
+    function promedioEdad(heroes) {
+        var acumEdad = heroes
+            .reduce(function (actual, siguiente) {
+            return actual + siguiente.edad;
+        }, 0);
+        var cantidad = heroes
+            .reduce(function (actual, siguiente) {
+            return actual + 1;
+        }, 0);
+        return (acumEdad / cantidad).toFixed(2);
     }
     function altaPersonaje() {
         document.getElementById("divTable").style.display = 'none';
@@ -180,6 +194,17 @@ var SegundoPARC;
             var heroeActual = heroesStorage[i];
             if (heroeActual.id == idPersonaje) {
                 retorno = i;
+            }
+        }
+        return retorno;
+    }
+    function determinoPersonajeEdad(edad) {
+        var retorno;
+        var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
+        for (var i = 0; i < heroesStorage.length; i++) {
+            var heroeActual = heroesStorage[i];
+            if (heroeActual.edad == edad) {
+                retorno = heroeActual;
             }
         }
         return retorno;
