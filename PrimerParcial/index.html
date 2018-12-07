@@ -70,25 +70,35 @@
           <i class="glyphicon glyphicon-plus"></i>
         </button>
 
-        <div class="col-md-offset-1">
-          
-            <label for="Filtro">FILTRAR POR:</label>
+        <!-- <div class='container'> -->
+        <div class="row">
+            <div class="col-sm">
+            <label for="Filtro">Filtrar por tipo:</label>
             <select name="filtrarPor" id="filtrarPor">
                 <option value=""></option>
                 <option value="todos"id="optionTodos">TODOS</option>
                 <option value="Heroe">HEROE</option>
                 <option value="Villano">VILLANO</option>
             </select>
+            </div>
+
+            <div class="col-sm">
+            <label for="promedioEdad">Promedio de Edad:</label>
+            <input class="form-control-pollo" type="text" value="" id="promedioEdad" readonly>
+            </div>
+    
+            <div class="col-sm">
+            <label for="personajeViejo">Personaje mas Viejo:</label>
+            <input class="form-control-pollo" type="text" value="" id="personajeViejo" readonly>
+            </div>
         </div>
-
-        </div>
-    <!-- </div> -->
-
-    <!-- <br> -->
- 
-
+      <!-- </div> -->
+   
+        
+      </div>
+   
     <!-- INICIO TABLA -->
-    <!-- <div class="container" > -->
+  
             <div class="spinner" id="spinner" style="display: show; margin-top: 3%;">
                 </div>
 

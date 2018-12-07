@@ -74,13 +74,9 @@ var SegundoPARC;
             //MUESTRO EL LISTADO DE EmpleadoS SEGUN FILTRO
             var stringFinal = heroesStorage
                 .filter(function (heroe) {
-                // let heroeRet = JSON.parse(heroe);
-                // return heroeRet.tipo == valor;
                 return heroe.lado == valor;
             })
                 .map(function (heroe) {
-                // let heroeRet = JSON.parse(heroe);
-                // return heroeRet;
                 return heroe;
             });
             heroesStorage = stringFinal;
@@ -98,6 +94,8 @@ var SegundoPARC;
                 "</tr>";
             tBodyTable.innerHTML = seccionPersonajes;
         }
+        // (<HTMLInputElement>document.getElementById("promedioEdad")).value = promedioEdad();
+        document.getElementById("personajeViejo").value = personajeMasViejo(heroesStorage);
         transicionSpinner();
         //CARGA DE TABLA INICIAL
         document.getElementById("divTable").style.display = 'block';
@@ -111,6 +109,11 @@ var SegundoPARC;
         var dirtyFormID = 'formAlta';
         var resetForm = document.getElementById(dirtyFormID);
         resetForm.reset();
+    }
+    function personajeMasViejo(arr) {
+        return arr.reduce(function (p, v) {
+            return (p < v.edad ? v.edad : p);
+        }, 0);
     }
     function altaPersonaje() {
         document.getElementById("divTable").style.display = 'none';
