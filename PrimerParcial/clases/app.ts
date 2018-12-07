@@ -5,21 +5,17 @@ namespace SegundoPARC{
  
 
     $(document).ready(function () {
-        
-        
 
         mostrarHeroes();
         //Asigno botones por JQUERY
         $("#btnLimpia").click(function () {
 
             localStorage.clear();
-            location.reload();
-            
+            location.reload(); 
         });
 
         $("#cancelarForm").click(function() { 
             canceloForm();
-
         }); 
     
         $("#btnAgregarConfirm").click(function() { 
@@ -28,7 +24,6 @@ namespace SegundoPARC{
     
         $("#btnEliminar").click(function() { 
             let idActual =Number($("#idSeleccionado").val());
-
             eliminarPersonaje(idActual);
         });
 
@@ -36,9 +31,7 @@ namespace SegundoPARC{
         $("#btnModificar").click(function() { 
             let idActual =Number($("#idSeleccionado").val());
             modificarPersonaje(idActual);
-
         });
-    
 
         
         $("#botonAgregarHeroe").click(function() { 
@@ -84,24 +77,6 @@ namespace SegundoPARC{
 
         // });
 
-        // $("#btnPrmedio").click(function () {
-
-        //         soluciones.promedio = function(usuarios){
-        //         var acumEdad = usuarios
-        //         .reduce(function(actual,siguiente){
-        //             return actual+siguiente.edad;
-        //         },0); //Inicializa y arranca en 0 porque es un numero lo que devuelve y no un objeto
-        //         //En la primer iteracion, actual toma 0 como valor
-            
-        //         var cantidad = usuarios
-        //         .reduce (function(actual,siguiente){
-        //             return actual + 1;
-        //         }, 0);
-        //         return (acumEdad / cantidad).toFixed(2);
-        //     }
-            
-        // });
-
        
         
     });//fin document.ready
@@ -109,10 +84,7 @@ namespace SegundoPARC{
 
 function mostrarHeroes(valor?:any):void {
 
-        let heroesStorage:any|null =  JSON.parse(
-            localStorage.getItem("LocalHeroes") || "[]"
-        )
-            ; 
+        let heroesStorage:any|null =  JSON.parse(localStorage.getItem("LocalHeroes") || "[]"); 
         var tBodyTable = $('#tBodyTable')[0];
         var seccionPersonajes:string = "";   
 
@@ -171,9 +143,9 @@ function transicionSpinner() {
 }
 
 function canceloForm() {
-var dirtyFormID = 'formAlta';
-var resetForm = <HTMLFormElement>document.getElementById(dirtyFormID);
-resetForm.reset();
+    var dirtyFormID = 'formAlta';
+    var resetForm = <HTMLFormElement>document.getElementById(dirtyFormID);
+    resetForm.reset();
 }
 
 function personajeMasViejo(arr:any) {
@@ -379,9 +351,8 @@ function mostrarFormulario()
     document.getElementById("btnAgregarConfirm")!.style.display='none';
     document.getElementById("cancelarForm")!.style.display='none';
 
-    //ACTIVO BOTONES DE MODIFICAR Y ELIMINAR
-    document.getElementById("btnModificar")!.style.display='block';
-    document.getElementById("btnEliminar")!.style.display='block';
+    $("#btnModificar").css("display","block");
+    $("#btnEliminar").css("display","block");
 
 }
 

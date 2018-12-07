@@ -51,20 +51,6 @@ var SegundoPARC;
         //     checkboxON.includes("tipoF")       == true ? $(".col3").css("display","none"):null;
         //     checkboxON.includes("sonidoF")       == true ? $(".col4").css("display","none"):null;
         // });
-        // $("#btnPrmedio").click(function () {
-        //         soluciones.promedio = function(usuarios){
-        //         var acumEdad = usuarios
-        //         .reduce(function(actual,siguiente){
-        //             return actual+siguiente.edad;
-        //         },0); //Inicializa y arranca en 0 porque es un numero lo que devuelve y no un objeto
-        //         //En la primer iteracion, actual toma 0 como valor
-        //         var cantidad = usuarios
-        //         .reduce (function(actual,siguiente){
-        //             return actual + 1;
-        //         }, 0);
-        //         return (acumEdad / cantidad).toFixed(2);
-        //     }
-        // });
     }); //fin document.ready
     function mostrarHeroes(valor) {
         var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
@@ -235,9 +221,8 @@ var SegundoPARC;
         //QUITO BOTON DE AGREGAR
         document.getElementById("btnAgregarConfirm").style.display = 'none';
         document.getElementById("cancelarForm").style.display = 'none';
-        //ACTIVO BOTONES DE MODIFICAR Y ELIMINAR
-        document.getElementById("btnModificar").style.display = 'block';
-        document.getElementById("btnEliminar").style.display = 'block';
+        $("#btnModificar").css("display", "block");
+        $("#btnEliminar").css("display", "block");
     }
     var auxEmpleado;
     function modificarHeroe(indice, auxEmpleado) {
