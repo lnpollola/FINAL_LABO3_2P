@@ -148,41 +148,41 @@ function modificarPersonaje() {
 }
 
 
-function traerListaHeroes(callback) {
-    //ESTA FUNCION RECIBE COMO PARAMETRO UN CALLBACK, POR SI SE QUIERE USAR 
-     //PARA REFRESCAR LA TABLA A LA VUELTA DE LA PETICION AL SERVIDOR
+// function traerListaHeroes(callback) {
+//     //ESTA FUNCION RECIBE COMO PARAMETRO UN CALLBACK, POR SI SE QUIERE USAR 
+//      //PARA REFRESCAR LA TABLA A LA VUELTA DE LA PETICION AL SERVIDOR
 
-     jqueryObj.get("http://localhost:3000/traer?collection=heroes",function (data, status) {
+//      jqueryObj.get("http://localhost:3000/traer?collection=heroes",function (data, status) {
 
-        var personajesCompleto = data.data;
-        var tBodyTable = $('#tBodyTable')[0];
+//         var personajesCompleto = data.data;
+//         var tBodyTable = $('#tBodyTable')[0];
          
-        var seccionPersonajes = "";
+//         var seccionPersonajes = "";
             
 
-        for(var i=0; i< personajesCompleto.length; i++)
-        {
+//         for(var i=0; i< personajesCompleto.length; i++)
+//         {
         
-            seccionPersonajes += "<tr><td>"+ personajesCompleto[i].id       + "</td>" +
-                                        "<td>" +      personajesCompleto[i].nombre   + "</td>" +
-                                        "<td>" +      personajesCompleto[i].apellido + "</td>" +
-                                        "<td>" +      personajesCompleto[i].alias    + "</td>" +
-                                        "<td>" +      personajesCompleto[i].edad    + "</td>"+
-                                        "<td>" +      personajesCompleto[i].lado    + "</td>"+
-                                "</tr>" ;
+//             seccionPersonajes += "<tr><td>"+ personajesCompleto[i].id       + "</td>" +
+//                                         "<td>" +      personajesCompleto[i].nombre   + "</td>" +
+//                                         "<td>" +      personajesCompleto[i].apellido + "</td>" +
+//                                         "<td>" +      personajesCompleto[i].alias    + "</td>" +
+//                                         "<td>" +      personajesCompleto[i].edad    + "</td>"+
+//                                         "<td>" +      personajesCompleto[i].lado    + "</td>"+
+//                                 "</tr>" ;
         
-            tBodyTable.innerHTML = seccionPersonajes;
-        }
+//             tBodyTable.innerHTML = seccionPersonajes;
+//         }
 
-        transicionSpinner();
-        //CARGA DE TABLA INICIAL
-        document.getElementById("divTable").style.display='block';
+//         transicionSpinner();
+//         //CARGA DE TABLA INICIAL
+//         document.getElementById("divTable").style.display='block';
 
-    } )//fin $.get
+//     } )//fin $.get
     
-    //VER EN CONTROLADOR.JS LA FUNCION ejecutarTransaccion PARA case "actualizarLista"
+//     //VER EN CONTROLADOR.JS LA FUNCION ejecutarTransaccion PARA case "actualizarLista"
 
-}
+// }
 
 function insertarHeroe(heroe) {
 

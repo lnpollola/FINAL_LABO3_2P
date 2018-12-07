@@ -32,7 +32,7 @@ export class heroe extends personaje {
         //GETTERS
         public heroeCompleto():string
         { 
-            return `${super.personajeCompleto()};${this.Id};${this.Alias};${this.Lado};`;
+            return `${super.personajeCompleto()};"'id':"${this.Id};"'alias':"${this.Alias};"'lado':"${this.Lado};`;
         }
 
         public toString():string

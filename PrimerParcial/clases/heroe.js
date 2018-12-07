@@ -43,7 +43,7 @@ var SegundoPARC;
         });
         //GETTERS
         heroe.prototype.heroeCompleto = function () {
-            return _super.prototype.personajeCompleto.call(this) + ";" + this.Id + ";" + this.Alias + ";" + this.Lado + ";";
+            return _super.prototype.personajeCompleto.call(this) + ";\"'id':\"" + this.Id + ";\"'alias':\"" + this.Alias + ";\"'lado':\"" + this.Lado + ";";
         };
         heroe.prototype.toString = function () {
             return JSON.stringify(this.heroeCompleto());

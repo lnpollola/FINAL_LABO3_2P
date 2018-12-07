@@ -3,21 +3,29 @@ var SegundoPARC;
 (function (SegundoPARC) {
     var heroeID;
     $(document).ready(function () {
-        // $("#addPopup").click(function () {
-        // $("#btnModificar").css("visibility","hidden");
-        // $("#btnEliminar").css("visibility","hidden");
-        // $("#btnAgregar").css("visibility","visible");
-        // $("#divTipo").css("visibility","visible");
-        // $('#nombreA').attr('value', "");
-        // $('#sondioA').attr('value', "");
-        // });
-        // $("#btnCerrar").click(function () {
-        // $("#divOculto1").css("visibility","hidden");
-        // });
+        //Asigno botones por JQUERY
         $("#btnLimpia").click(function () {
             localStorage.clear();
             location.reload();
         });
+        $("#cancelarForm").click(function () {
+            // document.getElementById("formAlta")!.reset();
+            var dirtyFormID = 'formAlta';
+            var resetForm = document.getElementById(dirtyFormID);
+            resetForm.reset();
+        });
+        $("#btnAgregarConfirm").click(function () {
+            altaPersonaje();
+        });
+        // $("#btnEliminar").click(function() { 
+        //     ejecutarTransaccion("Baja");
+        // });
+        // $("#btnModificar").click(function() { 
+        //     ejecutarTransaccion("Modificacion");
+        // });
+        // $("#tBodyTable").click(function () {
+        //     ejecutarTransaccion("Mostrar");
+        // });
         mostrarHeroes();
         // $("#radGatoA").on("click",function () {
         //     $("#radPerroA").prop("checked",false);
@@ -168,19 +176,53 @@ var SegundoPARC;
     function transicionSpinner() {
         document.getElementById("spinner").style.display = "none";
     }
-    // function transicion() {
-    //     if (xml.readyState ==4) 
-    //     {
-    //         if (xml.status==200) 
-    //         {
-    //             // alert( JSON.parse(xml.response).message );
-    //             $('#modalOK').modal('show');
-    //             document.getElementById("textoRespuesta")!.innerHTML = JSON.parse(xml.response).message;
-    //             document.getElementById("formAlta")!.reset();
-    //             mostrarHeroes();
-    //         } 
-    //         else
-    //         {document.getElementById("spinner")!.style.display = "none";}
-    //     }
-    // }
+    function altaPersonaje() {
+        var flag = true;
+        var idHeroe = Number($("#idHeroe").val());
+        var nombreHeroe = String($("#nombreHeroe").val());
+        var apellidoHeroe = String($("#apellidoHeroe").val());
+        var aliasHeroe = String($("#aliasHeroe").val());
+        var edadHeroe = Number($("#edadHeroe").val());
+        if ($("#ladoHeroe").prop("checked")) {
+            var ladoCheck = "Heroe";
+        }
+        else {
+            var ladoCheck = "Villano";
+        }
+        // let ladoHeroe       =String($("#ladoHeroe").val());
+        //    let nombreA:string = String($("#nombreA").val());
+        //    let sondioA:string = String($("#sondioA").val());
+        //    let radGatoA:boolean = $("#radGatoA").prop("checked");
+        //    let radPerroA:boolean = $("#radPerroA").prop("checked");
+        //    let radPajaroA:boolean = $("#radPajaroA").prop("checked");
+        var heroesLista = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
+        if (flag == true) {
+            var nuevoPersonaje = new SegundoPARC.heroe(idHeroe, nombreHeroe, apellidoHeroe, aliasHeroe, edadHeroe, ladoCheck);
+            heroesLista.push(nuevoPersonaje);
+            var stringHeroesLista = JSON.stringify(heroesLista);
+            localStorage.setItem("LocalHeroes", stringHeroesLista);
+        }
+        else {
+            $('#exampleModalCenter').modal('hide');
+            $('#modalERROR').modal('show');
+        }
+        $('#exampleModalCenter').modal('show');
+        //    if (radGatoA) {
+        //     let unGato: gato = new gato(nombreA,sondioA);
+        //     heroesLista.push(JSON.stringify(unGato));       
+        //    }
+        //    else if (radPerroA) {
+        //     let unPerro: perro = new perro(nombreA,sondioA);
+        //     heroesLista.push(JSON.stringify(unPerro));
+        //    }
+        //    else{
+        //     let unPajaro: pajaro = new pajaro(nombreA,sondioA);
+        //     heroesLista.push(JSON.stringify(unPajaro));
+        //    }
+        //    heroes.forEach(Programa.hablar);
+        //    location.reload();
+        //    let unJson = JSON.parse(localStorage.getItem("heroes")); //me dijo el profesor
+        //    alert(unJson[0]);
+        //    alert(localStorage.getItem("heroes"));
+    }
 })(SegundoPARC || (SegundoPARC = {}));
