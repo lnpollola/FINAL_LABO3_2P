@@ -3,16 +3,14 @@ var SegundoPARC;
 (function (SegundoPARC) {
     var heroeID;
     $(document).ready(function () {
+        mostrarHeroes();
         //Asigno botones por JQUERY
         $("#btnLimpia").click(function () {
             localStorage.clear();
             location.reload();
         });
         $("#cancelarForm").click(function () {
-            // document.getElementById("formAlta")!.reset();
-            var dirtyFormID = 'formAlta';
-            var resetForm = document.getElementById(dirtyFormID);
-            resetForm.reset();
+            canceloForm();
         });
         $("#btnAgregarConfirm").click(function () {
             altaPersonaje();
@@ -25,19 +23,6 @@ var SegundoPARC;
         // });
         // $("#tBodyTable").click(function () {
         //     ejecutarTransaccion("Mostrar");
-        // });
-        mostrarHeroes();
-        // $("#radGatoA").on("click",function () {
-        //     $("#radPerroA").prop("checked",false);
-        //     $("#radPajaroA").prop("checked",false);            
-        // });
-        // $("#radPerroA").on("click",function () {
-        //     $("#radGatoA").prop("checked",false);
-        //     $("#radPajaroA").prop("checked",false);            
-        // });
-        // $("#radPajaroA").on("click",function () {
-        //     $("#radGatoA").prop("checked",false);
-        //     $("#radPerroA").prop("checked",false);
         // });
         // $("#checkFORM :checkbox").on("click",function() {
         //     var checkboxON = $('input:checkbox:checked.checkItems').map(function() { return this.value; }).get();
@@ -80,61 +65,21 @@ var SegundoPARC;
         //    $('#nombreA').attr('value', nombreSelec);
         //    $('#sondioA').attr('value', ruidoSelec);
         // });
-        // $("#btnAgregar").click(function () {
-        //    // window.location.href="./index2.html"; //Tomo otro html
-        //    let nombreA:string = String($("#nombreA").val());
-        //    let sondioA:string = String($("#sondioA").val());
-        //    let radGatoA:boolean = $("#radGatoA").prop("checked");
-        //    let radPerroA:boolean = $("#radPerroA").prop("checked");
-        //    //    let radPajaroA:boolean = $("#radPajaroA").prop("checked");
-        //     let heroesLista = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
-        //     // let heroes:Array<animal> = new Array<animal>();
-        //     // let heroes:JSON;
-        //    if (radGatoA) {
-        //     let unGato: gato = new gato(nombreA,sondioA);
-        //     heroesLista.push(JSON.stringify(unGato));       
-        //    }
-        //    else if (radPerroA) {
-        //     let unPerro: perro = new perro(nombreA,sondioA);
-        //     heroesLista.push(JSON.stringify(unPerro));
-        //    }
-        //    else{
-        //     let unPajaro: pajaro = new pajaro(nombreA,sondioA);
-        //     heroesLista.push(JSON.stringify(unPajaro));
-        //    }
-        // //    heroes.forEach(Programa.hablar);
-        //    let stringHeroesLista = JSON.stringify(heroesLista);
-        //    localStorage.setItem("LocalHeroes", stringHeroesLista);
-        //    location.reload();
-        // //    let unJson = JSON.parse(localStorage.getItem("heroes")); //me dijo el profesor
-        // //    alert(unJson[0]);
-        // //    alert(localStorage.getItem("heroes"));
-        // })
     }); //fin document.ready
     function mostrarHeroes(valor) {
         var heroesStorage = JSON.parse(localStorage.getItem("LocalHeroes") || "[]");
         var tBodyTable = $('#tBodyTable')[0];
         var seccionPersonajes = "";
-        // let stringFinal = heroesString
-        //                         .filter(function(empleado){
-        //                             let empleadoRet = JSON.parse(empleado);
-        //                             return empleadoRet._tipo == valor;
-        //                         })
-        //                         .map(function(empleado){
-        //                             let empleadoRet = JSON.parse(empleado);
-        //                             return empleadoRet;
-        //                         });   
-        // EmpleadosString= stringFinal;
         if (valor) {
             //MUESTRO EL LISTADO DE EmpleadoS SEGUN FILTRO
             var stringFinal = heroesStorage
-                .filter(function (animal) {
-                var animalRet = JSON.parse(animal);
-                return animalRet.tipo == valor;
+                .filter(function (heroe) {
+                var heroeRet = JSON.parse(heroe);
+                return heroeRet.tipo == valor;
             })
-                .map(function (animal) {
-                var animalRet = JSON.parse(animal);
-                return animalRet;
+                .map(function (heroe) {
+                var heroeRet = JSON.parse(heroe);
+                return heroeRet;
             });
             heroesStorage = stringFinal;
         }
@@ -177,6 +122,11 @@ var SegundoPARC;
         document.getElementById("spinner").style.display = "none";
         document.getElementById("divTable").style.display = "block";
     }
+    function canceloForm() {
+        var dirtyFormID = 'formAlta';
+        var resetForm = document.getElementById(dirtyFormID);
+        resetForm.reset();
+    }
     function altaPersonaje() {
         document.getElementById("divTable").style.display = 'none';
         document.getElementById("spinner").style.display = "block";
@@ -200,7 +150,9 @@ var SegundoPARC;
             var stringHeroesLista_1 = JSON.stringify(heroesLista);
             setTimeout(function () {
                 localStorage.setItem("LocalHeroes", stringHeroesLista_1);
-                transicionSpinner();
+                mostrarHeroes();
+                $('#modalOK').modal('show');
+                document.getElementById("textoRespuesta").innerHTML = "Alta Exitosa";
             }, 5000);
         }
         else {
