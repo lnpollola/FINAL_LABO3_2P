@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow_read_only": true,
+    "allow_shell": false,
+    "allow_network": true
+  },
+  "model": {
+    "default": "claude-opus",
+    "max_tokens": 4096
+  },
+  "features": {
+    "auto_suggest": true,
+    "git_integration": true
+  }
+}
